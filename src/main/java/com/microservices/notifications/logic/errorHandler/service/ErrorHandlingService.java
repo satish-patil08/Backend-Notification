@@ -12,7 +12,8 @@ import com.mashape.unirest.http.HttpResponse;
 import com.microservices.notifications.commons.SequenceGeneratorService;
 import com.microservices.notifications.logic.errorHandler.entity.ErrorHandler;
 import com.microservices.notifications.logic.errorHandler.repository.ErrorHandlerRepo;
-import com.microservices.shared_utils.statusResponces.StandardStatusResponse;
+
+import com.microservices.shared_utils.statusResponces.StatusResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -25,15 +26,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import static com.microservices.shared_utils.barcodeUtility.BarcodeUtility.generateBarCode;
 
 @Service
 public class ErrorHandlingService {
-   /* private static final String ERROR_REPORTING_TEMPLATE_NAME = "system_error_reporting";
+    private static final String ERROR_REPORTING_TEMPLATE_NAME = "system_error_reporting";
 
 
-    @Autowired
-    private ContextAwareMultiThread executorService;
+    // @Autowired
+    // private ContextAwareMultiThread executorService;
 
     @Autowired
     private ErrorHandlerRepo errorHandlerRepo;
@@ -41,7 +41,7 @@ public class ErrorHandlingService {
     @Autowired
     private SequenceGeneratorService seqService;
 
-    public StandardStatusResponse handleError(String serviceName, String exMessage, String exFullInfo) throws Exception {
+    /*public StatusResponse handleError(String serviceName, String exMessage, String exFullInfo) throws Exception {
         ErrorHandler errorHandler = new ErrorHandler(); // Assuming ErrorHandler is your entity class
         errorHandler.setId(seqService.getSequenceNumber(ErrorHandler.SEQUENCE_COMMENTS));
         errorHandler.setServiceName(serviceName);
@@ -81,37 +81,39 @@ public class ErrorHandlingService {
                 "Error Reported"
         );
     }*/
-   public ResponseEntity<Object> createBarcode(String text, Integer height, Integer width) {
+
+
+    public ResponseEntity<Object> createBarcode(String text, Integer height, Integer width) {
 //       Optional<Items> item = itemRepo.findById(itemId);
 //       if (item.isEmpty())
 //           return ResponseEntity.ok(new StatusResponse(false, "Item Not Exist"));
 
-       byte[] barcodeImage = generateBarCode(text, height, width, null).getBody();
+        byte[] barcodeImage = generateBarCode(text, height, width, null).getBody();
 
-       ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-       PdfWriter writer = new PdfWriter(byteArrayOutputStream);
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        PdfWriter writer = new PdfWriter(byteArrayOutputStream);
 
-       ImageData imageData = ImageDataFactory.create(barcodeImage);
-       PdfDocument pdfDocument = new PdfDocument(writer);
-       pdfDocument.setDefaultPageSize(new PageSize(imageData.getWidth(), imageData.getHeight()));
+        ImageData imageData = ImageDataFactory.create(barcodeImage);
+        PdfDocument pdfDocument = new PdfDocument(writer);
+        pdfDocument.setDefaultPageSize(new PageSize(imageData.getWidth(), imageData.getHeight()));
 
-       Document document = new Document(pdfDocument, new PageSize(imageData.getWidth(), imageData.getHeight()));
-       document.setMargins(0, 0, 0, 0);
+        Document document = new Document(pdfDocument, new PageSize(imageData.getWidth(), imageData.getHeight()));
+        document.setMargins(0, 0, 0, 0);
 
-       Image image = new Image(imageData);
-       image.setFixedPosition(0, 0);
-       document.add(image);
-       document.close();
+        Image image = new Image(imageData);
+        image.setFixedPosition(0, 0);
+        document.add(image);
+        document.close();
 
-       byte[] pdfBytes = byteArrayOutputStream.toByteArray();
+        byte[] pdfBytes = byteArrayOutputStream.toByteArray();
 
-       HttpHeaders headers = new HttpHeaders();
-       headers.setContentType(MediaType.APPLICATION_PDF);
-       headers.setContentDispositionFormData("attachment", "Items_Barcode.pdf");
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        headers.setContentDispositionFormData("attachment", "Items_Barcode.pdf");
 
-       return ResponseEntity.ok()
-               .headers(headers)
-               .body(pdfBytes);
-   }
+        return ResponseEntity.ok()
+                .headers(headers)
+                .body(pdfBytes);
+    }
 
 }
