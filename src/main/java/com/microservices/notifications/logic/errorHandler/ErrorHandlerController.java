@@ -12,18 +12,17 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/notifications/error-reporting")
 public class ErrorHandlerController {
 
-/*
     @Autowired
     private ErrorHandlingService errorHandlingService;
-    @PostMapping("/report")
+
+/*    @PostMapping("/report")
     public StatusResponse handleError(@RequestBody ErrorHandlingRequest errorHandlingRequest) throws Exception {
         return errorHandlingService.handleError(
                 errorHandlingRequest.getServiceName(),
                 errorHandlingRequest.getExMessage(),
                 errorHandlingRequest.getExFullInfo()
         );
-    }
-*/
+    }*/
 
     @GetMapping("/print-barcode")
     public ResponseEntity<Object> generateBarcode(@RequestParam String itemId, @RequestParam(required = false, defaultValue = "60") Integer height, @RequestParam(required = false, defaultValue = "230") Integer width) {
