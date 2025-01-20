@@ -8,12 +8,8 @@ import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Image;
-import com.mashape.unirest.http.HttpResponse;
 import com.microservices.notifications.commons.SequenceGeneratorService;
-import com.microservices.notifications.logic.errorHandler.entity.ErrorHandler;
 import com.microservices.notifications.logic.errorHandler.repository.ErrorHandlerRepo;
-
-import com.microservices.shared_utils.statusResponces.StatusResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -21,10 +17,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
 
 import static com.microservices.shared_utils.barcodeUtility.BarcodeUtility.generateBarCode;
 
