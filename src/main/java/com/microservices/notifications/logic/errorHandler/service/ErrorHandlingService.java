@@ -26,6 +26,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import static com.microservices.shared_utils.barcodeUtility.BarcodeUtility.generateBarCode;
+
 
 @Service
 public class ErrorHandlingService {
