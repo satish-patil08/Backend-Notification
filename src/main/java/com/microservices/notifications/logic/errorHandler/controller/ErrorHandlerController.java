@@ -1,6 +1,7 @@
-package com.microservices.notifications.logic.errorHandler;
+package com.microservices.notifications.logic.errorHandler.controller;
 
 
+import com.microservices.notifications.logic.errorHandler.ErrorHandlingRequest;
 import com.microservices.notifications.logic.errorHandler.service.ErrorHandlingService;
 import com.microservices.shared_utils.statusResponces.StatusResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,14 +16,14 @@ public class ErrorHandlerController {
     @Autowired
     private ErrorHandlingService errorHandlingService;
 
-/*    @PostMapping("/report")
+    @PostMapping("/report")
     public StatusResponse handleError(@RequestBody ErrorHandlingRequest errorHandlingRequest) throws Exception {
         return errorHandlingService.handleError(
                 errorHandlingRequest.getServiceName(),
                 errorHandlingRequest.getExMessage(),
                 errorHandlingRequest.getExFullInfo()
         );
-    }*/
+    }
 
     @GetMapping("/print-barcode")
     public ResponseEntity<Object> generateBarcode(@RequestParam String itemId, @RequestParam(required = false, defaultValue = "60") Integer height, @RequestParam(required = false, defaultValue = "230") Integer width) {

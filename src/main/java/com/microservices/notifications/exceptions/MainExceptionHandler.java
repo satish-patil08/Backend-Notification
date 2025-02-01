@@ -1,13 +1,13 @@
 package com.microservices.notifications.exceptions;
 
 
-import com.microservices.shared_utils.constants.Constants;
 import com.microservices.shared_utils.statusResponces.StatusResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import static com.microservices.shared_utils.constants.Constants.ERROR_MESSAGE;
 
 @ControllerAdvice
 public class MainExceptionHandler {
@@ -19,7 +19,7 @@ public class MainExceptionHandler {
         return new ResponseEntity<>(
                 new StatusResponse(
                         false,
-                        Constants.ERROR_MESSAGE
+                        ERROR_MESSAGE
                 ),
                 HttpStatus.INTERNAL_SERVER_ERROR
         );

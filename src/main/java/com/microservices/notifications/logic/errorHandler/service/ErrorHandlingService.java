@@ -8,8 +8,13 @@ import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Image;
+import com.mashape.unirest.http.HttpResponse;
 import com.microservices.notifications.commons.SequenceGeneratorService;
+import com.microservices.notifications.logic.errorHandler.entity.ErrorHandler;
 import com.microservices.notifications.logic.errorHandler.repository.ErrorHandlerRepo;
+import com.microservices.shared_utils.centralEngagement.CentralEngagementOps;
+import com.microservices.shared_utils.multiThreading.ContextAwareMultiThread;
+import com.microservices.shared_utils.statusResponces.StatusResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -17,6 +22,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import static com.microservices.shared_utils.barcodeUtility.BarcodeUtility.generateBarCode;
 
@@ -26,8 +34,8 @@ public class ErrorHandlingService {
     private static final String ERROR_REPORTING_TEMPLATE_NAME = "system_error_reporting";
 
 
-    // @Autowired
-    // private ContextAwareMultiThread executorService;
+    @Autowired
+    private ContextAwareMultiThread executorService;
 
     @Autowired
     private ErrorHandlerRepo errorHandlerRepo;
@@ -35,7 +43,7 @@ public class ErrorHandlingService {
     @Autowired
     private SequenceGeneratorService seqService;
 
-    /*public StatusResponse handleError(String serviceName, String exMessage, String exFullInfo) throws Exception {
+    public StatusResponse handleError(String serviceName, String exMessage, String exFullInfo) throws Exception {
         ErrorHandler errorHandler = new ErrorHandler(); // Assuming ErrorHandler is your entity class
         errorHandler.setId(seqService.getSequenceNumber(ErrorHandler.SEQUENCE_COMMENTS));
         errorHandler.setServiceName(serviceName);
@@ -44,25 +52,13 @@ public class ErrorHandlingService {
         errorHandler.setCreatedAt(new Date());
         errorHandlerRepo.save(errorHandler);
 
-        // Chinmay
-        HttpResponse<String> httpResponse = CentralEngagementOps.getTriggerAPIBuilder(CentralEngagementOps.getWhatsAppRequestBody(new ArrayList<>(List.of(new String[]{serviceName, exMessage, exFullInfo})), ERROR_REPORTING_TEMPLATE_NAME, null, "919011103061"));
+        // Satish
+        HttpResponse<String> httpResponse = CentralEngagementOps.getTriggerAPIBuilder(CentralEngagementOps.getWhatsAppRequestBody(new ArrayList<>(List.of(new String[]{serviceName, exMessage, exFullInfo})), ERROR_REPORTING_TEMPLATE_NAME, null, "919552021923"));
         executorService.execute(() -> {
             try {
 
-                // LTR Service (Office No)
-                // CentralEngagementOps.getTriggerAPIBuilder(CentralEngagementOps.getWhatsAppRequestBody(new ArrayList<>(List.of(new String[]{serviceName, exMessage, exFullInfo})), ERROR_REPORTING_TEMPLATE_NAME, null, "919416821903"));
-
-                // Prachi - Frontend Dev
-                CentralEngagementOps.getTriggerAPIBuilder(CentralEngagementOps.getWhatsAppRequestBody(new ArrayList<>(List.of(new String[]{serviceName, exMessage, exFullInfo})), ERROR_REPORTING_TEMPLATE_NAME, null, "919284061931"));
-
-                // Dipak - Frontend Dev
-                CentralEngagementOps.getTriggerAPIBuilder(CentralEngagementOps.getWhatsAppRequestBody(new ArrayList<>(List.of(new String[]{serviceName, exMessage, exFullInfo})), ERROR_REPORTING_TEMPLATE_NAME, null, "919112751660"));
-
                 // Satish - Backend
-                CentralEngagementOps.getTriggerAPIBuilder(CentralEngagementOps.getWhatsAppRequestBody(new ArrayList<>(List.of(new String[]{serviceName, exMessage, exFullInfo})), ERROR_REPORTING_TEMPLATE_NAME, null, "919552021923"));
-
-                // Nitin - UX Researcher
-                CentralEngagementOps.getTriggerAPIBuilder(CentralEngagementOps.getWhatsAppRequestBody(new ArrayList<>(List.of(new String[]{serviceName, exMessage, exFullInfo})), ERROR_REPORTING_TEMPLATE_NAME, null, "917666558443"));
+                //CentralEngagementOps.getTriggerAPIBuilder(CentralEngagementOps.getWhatsAppRequestBody(new ArrayList<>(List.of(new String[]{serviceName, exMessage, exFullInfo})), ERROR_REPORTING_TEMPLATE_NAME, null, "919552021923"));
 
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -74,7 +70,7 @@ public class ErrorHandlingService {
                 true,
                 "Error Reported"
         );
-    }*/
+    }
 
 
     public ResponseEntity<Object> createBarcode(String text, Integer height, Integer width) {
