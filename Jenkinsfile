@@ -32,7 +32,6 @@ pipeline {
         stage('Run the updated service') {
             steps {
                 sh '''
-                # Start the service with the updated JAR file
                 sudo systemctl start backend-notification
 
                 # Check the status of the service to ensure it started successfully
