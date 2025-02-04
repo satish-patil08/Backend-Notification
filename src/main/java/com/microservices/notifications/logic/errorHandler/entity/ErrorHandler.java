@@ -19,7 +19,6 @@ public class ErrorHandler {
     public String exFullInfo;
     public Date createdAt;
 
-
     public ErrorHandler(){
 
     }
